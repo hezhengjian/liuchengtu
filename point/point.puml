@@ -1,0 +1,47 @@
+@startuml
+(*)-->get userBalance
+if None || len == 0 then
+-right-> [Yes] throw error
+-->return
+else
+if userBalance == 0 then
+-left-> [Yes] return (0, 0)
+--> (*)
+else
+-->get payAmount
+if None || len == 0 then
+-right-> [Yes] throw error
+else
+if payAmount==0 then
+-left-> [Yes] return (0, 0)
+else
+-->get everyPoints
+if None || len == 0 then
+-right-> [Yes] throw error
+else
+-->get type
+if None || len == 0 then
+-right-> [Yes] throw error
+else
+--> payPoints = payAmount * everyPoints
+if type === whole then
+--> [Yes] result === getWholePoint
+--> result
+else
+--> get startPoint
+if None || len == 0 then
+--> [Yes] throw error
+--> (*)
+else
+--> get maxMultiple
+if None || len == 0 then
+--> [Yes] throw error
+else
+if type === multiple then
+--> [Yes] result = getmultiplePoint
+--> result
+else
+--> result === getRadomPoints
+--> result
+--> (*)
+@enduml

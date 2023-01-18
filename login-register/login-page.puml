@@ -1,0 +1,60 @@
+@startuml
+start
+:Login Phone Page;
+switch(操作事件)
+case (Login)
+if (Phone) then (YES)
+  :Phone;
+  #palegreen:聚焦;
+  :弹出手机号键盘;
+  repeat
+    #palegreen:输入;
+    :填写手机号自动格式化;
+  repeat while
+  #palegreen:失去焦点;
+  if (合规) then (YES)
+    :清空错误;
+  else (NO)
+    :提示错误;
+  endif
+  #palegreen:click login;
+  if (合规) then (YES)
+    :清空错误;
+    :请求接口;
+    if (请求成功) then (YES)
+      #palegreen:跳转输入code页面;
+    else (NO)
+      :提示错误;
+      kill
+    endif
+  else (NO)
+    :提示错误;
+    kill
+  endif
+else (NO)
+  if (Apple) then (YES)
+    :获取apple login id;
+  else (NO)
+    :获取google login id;
+  endif
+  :请求接口;
+  switch(Response(code))
+  case (0)
+  :登录成功;
+  :保存用户信息;
+  #palegreen:返回跳转登录前的页面;
+  case (93101)
+  :用户未绑定;
+  #palegreen:跳转绑定手机号界面;
+  case (error)
+  :提示错误;
+  kill
+  endswitch
+endif
+case (Policy)
+#palegreen:跳转协议页面;
+case (Terms)
+#palegreen:跳转协议页面;
+endswitch
+stop
+@enduml

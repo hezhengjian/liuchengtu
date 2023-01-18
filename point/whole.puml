@@ -1,0 +1,11 @@
+@startuml
+(*)-->param1 userBalance
+-->params2 payPoint
+-->params3 payAmount
+if userBalance > payPoint then
+--> [Yes] return (payPoints, payAmount)
+--> (*)
+else
+--> return(0, 0)
+--> (*)
+@enduml

@@ -1,0 +1,75 @@
+@startuml
+start
+:Graphic verification code;
+switch(Type)
+case (Phone)
+#palegreen:PhoneInput聚焦;
+:弹出手机号键盘;
+repeat
+  #palegreen:输入;
+  :填写手机号自动格式化;
+repeat while
+#palegreen:失去焦点;
+if (合规) then (YES)
+  :清空错误;
+else (NO)
+  :提示错误;
+endif
+case (Code)
+if(autoCountDown) then (YES)
+  :buttonTitle='Resent';
+  :counter=60;
+  :startCounterDown;
+else (NO)
+  :buttonTitle='Get Code';
+endif
+endswitch
+repeat
+  if (Graphic verification code show) then(YES)
+    #palegreen:GraphicCodeInput聚焦;
+    :弹出手机号键盘;
+    repeat
+      #palegreen:输入Code;
+    repeat while
+    #palegreen:失去焦点;
+    if (合规) then (YES)
+      :清空错误;
+    else (NO)
+      :提示错误;
+    endif
+  endif
+  #PaleGreen:发送验证码;
+  if (Graphic verification code show) then (YES)
+    if(校验验证码 success) then (YES)
+      :发送请求校验图形验证码;
+    else (NO)
+      end
+    endif
+  else (NO)
+  endif
+  if (success) then (YES)
+    if(TYPE === PHONE) then (YES)
+      #palegreen:跳转页面;
+    else (NO)
+      #palegreen:CodeInput聚焦;
+      :弹出手机号键盘;
+      repeat
+        #palegreen:输入Code;
+      repeat while
+      #palegreen:失去焦点;
+      if (合规) then (YES)
+        :清空错误;
+      else (NO)
+        :提示错误;
+      endif
+    endif
+    stop
+  else (NO)
+    if(responseCode===93xxx) then (YES)
+      :show verification code;
+    else (NO)
+      :showError;
+    endif
+  endif
+repeat while
+@enduml

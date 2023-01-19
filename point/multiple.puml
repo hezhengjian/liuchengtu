@@ -1,37 +1,41 @@
-@startuml
-(*)-->param1 userBalance
--->params2 payPoint
--->params3 everyPoint
--->params4 maxMultiple
-if 判断四个参数是否有None
---> [Yes] throw error
---> (*)
-else
-if userBalance < startPoint then
---> [Yes] return(0, 0)
---> (*)
-else
-if payPoints < startPoint then
---> [Yes] return(0, 0)
-else 
-partition getUserBalanceMultiple {
---> userBalanceMultiple
--right-> userBalance / everyPoint向下取整
--right-> 备注通过用户积分获取最大使用倍数
-}
-partition getpayPointMultiple {
-userBalanceMultiple--> payPointMultiple
--right-> payPoint / everyPoint向下取整
--right-> 备注通过支付积分获取最大使用倍数
-}
-partition getMaxMultiple {
-payPointMultiple--> maxMultiple = min(userBalanceMultiple, payPointMultiple, maxMultiple)
---> 备注从上面三个中获取最小值当最大倍数使用
-}
---> minMultiple = 1
---> get random in (minMultiple, maxMultiple)
---> point = random * startPoint
---> price = point / everyPoint
---> return (point, price)
---> (*)
+@startuml Multiple
+start
+:param1 userBalance;
+:params2 payPoint;
+:params3 everyPoint;
+:params4 maxMultiple;
+if (判断四个参数是否有None) then (YES)
+  :throw error;
+else (NO)
+  if (userBalance < startPoint) then (YES)
+    :return(0, 0);
+  else (NO)
+    if (payPoints < startPoint) then (YES)
+      :return(0, 0);
+    else (NO)
+      partition getUserBalanceMultiple {
+        :userBalanceMultiple;
+        -right-> userBalance / everyPoint向下取整
+        -right-> 备注通过用户积分获取最大使用倍数
+      }
+      partition getpayPointMultiple {
+        :userBalanceMultiple;
+        :payPointMultiple;
+        -right-> payPoint / everyPoint向下取整
+        -right-> 备注通过支付积分获取最大使用倍数
+      }
+      partition getMaxMultiple {
+        :payPointMultiple;
+        :maxMultiple = min(userBalanceMultiple, payPointMultiple, maxMultiple);
+        :备注从上面三个中获取最小值当最大倍数使用;
+      }
+      :minMultiple = 1;
+      :get random in (minMultiple, maxMultiple);
+      :point = random * startPoint;
+      :price = point / everyPoint;
+      :return (point, price);
+    endif
+  endif
+endif
+stop
 @enduml

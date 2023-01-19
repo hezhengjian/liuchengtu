@@ -1,23 +1,25 @@
-@startuml
-(*)-->param1 userBalance
--->params2 payPoint
--->params3 everyPoint
---> get startPoint
---> if None || len == 0 then
---> [Yes] throw error
---> (*)
-else
-if userBalance < startPoint then
---> [Yes] return(0, 0)
---> (*)
-else
-if payPoints < startPoint then
---> [Yes] return(0, 0)
-else 
---> maxPoint = min(payPoint, userBalance)
---> minPoint = 1 || everyPoint
---> point = random in (minPoint, maxPoint)
---> price = point / everyPoint
---> return (point, price)
---> (*)
+@startuml Custom point
+start
+:param1 userBalance;
+:params2 payPoint;
+:params3 everyPoint;
+:get startPoint;
+if (None || len == 0) then (YES)
+  :throw error;
+else (NO)
+  if (userBalance < startPoint) then (YES)
+    :return(0, 0);
+  else (NO)
+    if (payPoints < startPoint) then (YES)
+      :return(0, 0);
+    else (NO)
+      :maxPoint = min(payPoint, userBalance);
+      :minPoint = 1 || everyPoint;
+      :point = random in (minPoint, maxPoint);
+      :price = point / everyPoint;
+      :return (point, price);
+    endif
+  endif
+endif
+stop
 @enduml

@@ -1,4 +1,4 @@
-@startuml
+@startuml Graphic verification code
 start
 :Graphic verification code;
 switch(Type)

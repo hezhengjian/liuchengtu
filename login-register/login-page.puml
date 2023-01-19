@@ -1,6 +1,6 @@
-@startuml
+@startuml Login Page
 start
-:Login Phone Page;
+:Login Page;
 switch(操作事件)
 case (Login)
 if (Phone) then (YES)

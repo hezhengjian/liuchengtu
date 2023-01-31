@@ -1,0 +1,27 @@
+@startuml Network Status
+start
+if (network normal) then (YES)
+  :正常运行;
+else (NO)
+  #palegreen:显示toast(不需要点击);
+  switch(page)
+  case (美食节home page)
+  :展示默认页面;
+  case (order page)
+  :展示网络错误页面;
+  case (history)
+  :展示网络错误页面;
+  case (mine)
+  :展示默认页面;
+  case (other)
+  if (首次打开) then (YES)
+    :展示网络错误页面;
+  else (NO)
+    :展示之前加载出来的页面;
+  endif
+  endswitch
+  #palegreen:网络回复;
+  :刷新页面响应页面;
+endif
+stop
+@enduml
